@@ -1,23 +1,28 @@
 import React from 'react';
 import { Container, Header } from 'semantic-ui-react';
 import ReactPlaceholder from 'react-placeholder';
+
 import UserItem from './UserItem';
+import { store } from '../store';
 
 class UserList extends React.Component {
-    state = {
+    state = window.__PRELOADED_STATE__ || {
         users: [],
         loading: false
     }
 
     async componentDidMount() {
-        this.setState({
-            loading: true
-        });
-        const response = await fetch('https://swapi.co/api/people/').then(x => x.json());
-        this.setState({
-            users: response.results,
-            loading: false
-        });
+        if (this.state.users.length <= 0) {
+            this.setState({
+                loading: true
+            });
+            const response = await fetch('https://swapi.co/api/people/').then(x => x.json());
+            this.setState({
+                users: response.results,
+                loading: false
+            });
+            store.users = response.results;
+        }
     }
 
     render() {
