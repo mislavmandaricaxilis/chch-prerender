@@ -24,11 +24,9 @@ class UserList extends React.Component {
         return (
             <Container text style={{ marginTop: '7em' }}>
                 <Header as='h1'>Users</Header>
-                <p>
-                    <ReactPlaceholder showLoadingAnimation type="media" rows={4} ready={!this.state.loading}>
-                        {this.state.users.map(user => <UserItem {...user} />)}
-                    </ReactPlaceholder>
-                </p>
+                <ReactPlaceholder showLoadingAnimation type="media" rows={4} ready={!this.state.loading}>
+                    {this.state.users.map(user => <UserItem key={user.name} {...user} />)}
+                </ReactPlaceholder>
             </Container>
         );
     }
